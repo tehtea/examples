@@ -34,16 +34,14 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation project(":models")
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     // Build off of nightly TensorFlow Lite
-    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly-SNAPSHOT'
     implementation 'org.tensorflow:tensorflow-lite-gpu:0.0.0-nightly-SNAPSHOT'
 
-    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
-
-    // Use local TensorFlow library
-    // implementation 'org.tensorflow:tensorflow-lite-local:0.0.0'
+    implementation ('org.tensorflow:tensorflow-lite-support:0.1.0') {
+        exclude module: 'tensorflow-lite'
+    }
 }

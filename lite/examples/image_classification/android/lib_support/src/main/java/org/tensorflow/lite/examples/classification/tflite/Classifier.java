@@ -56,7 +56,8 @@ public abstract class Classifier {
     FLOAT_MOBILENET,
     QUANTIZED_MOBILENET,
     FLOAT_EFFICIENTNET,
-    QUANTIZED_EFFICIENTNET
+    QUANTIZED_EFFICIENTNET,
+    QUICKNET
   }
 
   /** The runtime device type used for executing classification. */
@@ -120,6 +121,8 @@ public abstract class Classifier {
       return new ClassifierFloatEfficientNet(activity, device, numThreads);
     } else if (model == Model.QUANTIZED_EFFICIENTNET) {
       return new ClassifierQuantizedEfficientNet(activity, device, numThreads);
+    } else if (model == Model.QUICKNET) {
+      return new ClassifierQuickNet(activity, device, numThreads);
     } else {
       throw new UnsupportedOperationException();
     }
@@ -208,7 +211,7 @@ public abstract class Classifier {
         tfliteOptions.addDelegate(gpuDelegate);
         break;
       case CPU:
-        tfliteOptions.setUseXNNPACK(true);
+        tfliteOptions.setUseXNNPACK(false);
         break;
     }
     tfliteOptions.setNumThreads(numThreads);
